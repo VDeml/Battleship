@@ -3,13 +3,15 @@ class Ship {
         this.length = length
         this.dmgTaken = 0
         this.sunk = false
-    }
+    };
     takeHit() {
         this.dmgTaken ++
         return this.dmgTaken
+    };
+    isSunk() {
+        return this.dmgTaken === this.length
     }
 }
 
-const shipOne = new Ship
 
-export { Ship, shipOne }
+export { Ship }
