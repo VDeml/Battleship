@@ -1,6 +1,13 @@
 import {expect, test} from '@jest/globals';
-import { Ship, test1 } from './index.js';
+import { Ship, shipOne, test1 } from './index.js';
+
+const shipTwo = new Ship
+shipTwo.takeHit()
+
+test("Test the Ship damage taken property", () => {
+    expect(shipTwo.dmgTaken).toEqual(1)
+});
 
 test("Test the hit Ship method", () => {
-    expect(test1()).toEqual(1)
+    expect(shipTwo.takeHit()).toEqual(2)
 });

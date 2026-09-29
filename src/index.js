@@ -4,9 +4,12 @@ class Ship {
         this.dmgTaken = 0
         this.sunk = false
     }
-}
-function test1() {
-    return 1
+    takeHit() {
+        this.dmgTaken ++
+        return this.dmgTaken
+    }
 }
 
-export { test1 }
+const shipOne = new Ship
+
+export { Ship, shipOne }
