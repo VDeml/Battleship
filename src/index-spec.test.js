@@ -1,44 +1,48 @@
 import {expect, test} from '@jest/globals';
 import { Ship, gameBoard } from './index.js';
 
-const shipOne = new Ship(1)
 
 
-test.skip("Test the Ship damage taken property", () => {
-    expect(shipOne.dmgTaken).toEqual(0)
-});
-
-test.skip("Test the hit Ship method", () => {
-    expect(shipOne.takeHit()).toEqual(1)
-});
-
-test.skip("Check ship length", () => {
-    expect(shipOne.length).toEqual(1)
-});
-
-test("Test gameBoard avalibility", () => {
-    expect(gameBoard.boardArr[7][7]).toEqual(null)
-});
-
-// place a ship of length 3 at coords [0,0], [1,0], [2,0]
-gameBoard.placeShip(3, [0,0])
-
-test("Test placeShip function", () => {
-    expect(gameBoard.placeShip(3, [0,0])).toEqual("Coordinates occupied, pick a new spot for your ship")
-});
-
-test.skip("Fire a shot at an empty tile, get 'You missed!' returned", () => {
-    expect(gameBoard.recieveAttack([1,1])).toEqual("You missed!")
-})
-gameBoard.recieveAttack([1,0])
-
-
-test("Fire a shot, hit a ship, return dmg taken of that ship", () => {
-    expect(gameBoard.recieveAttack([1,0])).toEqual("Ouch, beeh hit for: 2!")
-    expect(gameBoard.recieveAttack([1,0])).toEqual("Ouch, beeh hit for: 3!")
+test("Ships start off with 0 dmg taken", () => {
+    const shipOne = new Ship;
+    expect(shipOne.dmgTaken).toBe(0)
 })
 
-test("Fire a shot twice at the same spot, 1st hits, 2nd throws an error", () => {
-    expect(gameBoard.recieveAttack([1,1])).toEqual("You missed")
-    expect(gameBoard.recieveAttack([1,1])).toEqual("You cant shoot here mate")
+test("A ship stores its own length", () => {
+    const ship = new Ship(3);
+    expect(ship.length).toBe(3)
+});
+
+test("takeHit() method increases dmg taken of the ship hit", () => {
+    const ship = new Ship(5)
+    ship.takeHit()
+    expect(ship.dmgTaken).toBe(1)
+});
+
+test("Ship isn't sunk before hit enough times, then sunk once it takes enough DMG", () => {
+    const ship = new Ship(2)
+    ship.takeHit()
+    expect(ship.isSunk()).toBe(false)
+    ship.takeHit()
+    expect(ship.isSunk()).toBe(true)
+});
+
+test("new gameBoard starts empty with only null values", () => {
+    const board = gameBoard();
+    expect(board.boardArr[0][0]).toBe(null)
+    expect(board.boardArr[7][7]).toBe(null)
+});
+
+test("Placing a new ship on gameboard", () => {
+    const board = gameBoard();
+    board.placeShip(2, [0,0], false)
+    expect(board.boardArr[0][1]).not.toBe(null)
+});
+
+test("Placing a ship in an already taken space", () => {
+    const board = gameBoard();
+    board.placeShip(1, [0,0, true])
+    expect(board.placeShip(1, [0,0])).toBe("Coordinates occupied, pick a new spot for your ship")
+    expect(board.boardArr[0][0]).not.toBe(null)
 })
+
