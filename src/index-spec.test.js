@@ -1,5 +1,5 @@
 import {expect, test} from '@jest/globals';
-import { Ship, gameBoard } from './index.js';
+import { Ship, gameBoard, Player } from './index.js';
 
 
 
@@ -46,3 +46,9 @@ test("Placing a ship in an already taken space", () => {
     expect(board.boardArr[0][0]).not.toBe(null)
 })
 
+test("Creating a new human player with name Tom", () => {
+    const playerOne = new Player("Tom", true);
+    expect(playerOne.name).toBe("Tom");
+    expect(playerOne.isPerson).toBe(true)
+    expect(playerOne.board.playerFleet[0]).toBe(undefined)
+})

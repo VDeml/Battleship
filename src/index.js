@@ -16,8 +16,6 @@ class Ship {
     };
 }
 
-
-
 // factory function for the gameboard
 const gameBoard = () => {
     // initialize a board represented by a SIZE x SIZE grid
@@ -116,7 +114,16 @@ const gameBoard = () => {
         return playerFleet.every((ship) => ship.sunk)
     }
 
-    return { boardArr, placeShip, recieveAttack, checkForGameOver }
+    return { boardArr, placeShip, recieveAttack, checkForGameOver, playerFleet }
 };
 
-export { Ship, gameBoard }
+class Player {
+    constructor(name, isPerson = false) {
+        this.name = name
+        // to differentiate between a "person" and "computer" type? Default setting is for computer so false
+        this.isPerson = isPerson
+        this.board = gameBoard()
+    };
+}
+
+export { Ship, gameBoard, Player }
