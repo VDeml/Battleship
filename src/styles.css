@@ -78,23 +78,33 @@ body {
 
 .gameBoards {
     display: flex;
-    gap: 18rem;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
-.playerBoard, .enemyBoard {
+.humanBoard, .computerBoard, .humanFogBoard, .computerFogBoard {
     background-color: rgb(242, 242, 242);
     box-shadow: 20px 12px 20px 0 rgba(0, 0, 0, 0.2), 5px 10px 20px 0 rgba(0, 0, 0, 0.19);
     border: solid black 2px;
-    width: 400px;
-    height: 400px;
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 400px;
+    max-height: 400px;
     display: grid;
     grid-template: repeat(8, 1fr) / repeat(8, 1fr);
     box-sizing: border-box;
 }
 
+.missed, .gotShot {
+  background-color: red;
+}
+
+.hit {
+  background-color: green;
+}
+
 .gridCell {
   border: 1px solid hsl(0, 0%, 50%);
-  font-size: 10rem;
   text-align: center;
   font-weight: bold;
   display: flex;
@@ -105,6 +115,10 @@ body {
 
 .gridCell:hover {
     background-color: var(--primary-bg-color);
+}
+
+.containsShip {
+    background-color: rgb(68, 67, 67);
 }
 
 /*

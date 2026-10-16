@@ -41,7 +41,7 @@ const gameBoard = () => {
     let playerFleet = []
 
     // function to place a ship on the board, provided with the [x,y] coordinates
-    const placeShip = (sizeOfShip, coords, horizontalRotation = true) => {
+    const placeShip = (sizeOfShip, coords, verticalRotation = false) => {
         const xCoordinate = coords[0];
         const yCoordinate = coords[1];
         const shipLength = sizeOfShip
@@ -49,7 +49,7 @@ const gameBoard = () => {
         if (xCoordinate < 0 || xCoordinate >= SIZE || yCoordinate < 0 || yCoordinate >= SIZE) {
             return "Trying to place ship outside battlefield"
         }
-        if (horizontalRotation) {
+        if (verticalRotation) {
             if (xCoordinate + shipLength > SIZE) {
                 return "Trying to place ship outside battlefield"
             }
@@ -61,19 +61,19 @@ const gameBoard = () => {
         }
         // First for loop checking if boardArr is free for ship placement
         for(let i = 0; i < shipLength; i++) {
-            if(horizontalRotation && boardArr[xCoordinate + i][yCoordinate] !== null) {
+            if(verticalRotation && boardArr[xCoordinate + i][yCoordinate] !== null) {
                 return "Coordinates occupied, pick a new spot for your ship"
             }
-            if(!horizontalRotation && boardArr[xCoordinate][yCoordinate + i] !== null) {
+            if(!verticalRotation && boardArr[xCoordinate][yCoordinate + i] !== null) {
                 return "Coordinates occupied, pick a new spot for your ship"
             }
         }       
         // Given the first for loop finished, the boardArr is free and we can place our ship
         for(let j = 0; j < shipLength; j++) {
-            if(horizontalRotation) {
+            if(verticalRotation) {
                 boardArr[xCoordinate + j][yCoordinate] = newShip
             }
-            else if(!horizontalRotation) {
+            else if(!verticalRotation) {
                 boardArr[xCoordinate][yCoordinate + j] = newShip
             }
         }
@@ -84,14 +84,14 @@ const gameBoard = () => {
         const tileHit = boardArr[coordinates[0]][coordinates[1]]
         // if there already is a value, we got a repeat shot, so get an error msg saying something like "Shoot somewhere else dummy!"
         if(shotsArr[coordinates[0]][coordinates[1]]) {
-            return "You cant shoot here mate"
+            return "Invalid"
         }
         // else if value is falsy, that means we can record the shot
         else {
             // if falsy, there is no ship here, you missed, and record this tile as getting shot once in the shotsArr
             if(!tileHit) {
                 shotsArr[coordinates[0]][coordinates[1]] = true
-                return "You missed!"
+                return "Miss!"
             }
             // Else there is a ship here, record it getting shot
             else {
@@ -104,7 +104,7 @@ const gameBoard = () => {
                     }else return "Ship sunk!"
                 }
                 else {
-                    return `Ouch, beeh hit for: ${tileHit.dmgTaken}!`
+                    return "Hit!"
                 }
             }
         }
@@ -114,7 +114,7 @@ const gameBoard = () => {
         return playerFleet.every((ship) => ship.sunk)
     }
 
-    return { boardArr, placeShip, recieveAttack, checkForGameOver, playerFleet }
+    return { boardArr, placeShip, recieveAttack, checkForGameOver, playerFleet, shotsArr }
 };
 
 class Player {
