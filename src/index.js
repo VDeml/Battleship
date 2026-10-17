@@ -2,9 +2,6 @@ import "./styles.css"
 import { Ship, gameBoard, Player } from './app-logic.js';
 import { buildBoard, destroyContent } from './GUI.js';
 
-
-
-
 const gameController = () => {
     // create player One (human)
     const playerOne = new Player("Human", true)
@@ -12,18 +9,24 @@ const gameController = () => {
     const playerTwo = new Player("Computer", false)
     let gameOver = false;
     // we have the two players, now populate both boards
-    // Innitialy with some default values
     // for player
-    playerOne.board.placeShip(3, [0,0], false)
-    playerOne.board.placeShip(4, [4,0], true)
-    playerOne.board.placeShip(1, [0,7], true)
+    for(let i = 1; i < 6; i++) {
+        let shipPlaced = playerOne.board.placeShip(i, `ship${i}`, randomCoords(playerOne.board.boardArr), randomizeShipOrientation())
+        while(shipPlaced === "Invalid") {
+            shipPlaced = playerOne.board.placeShip(i, `ship${i}`, randomCoords(playerOne.board.boardArr), randomizeShipOrientation())
+        }
+    }
+    
     // for computer
-    playerTwo.board.placeShip(3, [0,0], false)
-    playerTwo.board.placeShip(1, [0,6], false)
-    playerTwo.board.placeShip(4, [1,0], false)
+     for(let j = 1; j < 6; j++) {
+        let shipPlaced = playerTwo.board.placeShip(j, `ship + ${j}`, randomCoords(playerTwo.board.boardArr), randomizeShipOrientation())
+        while(shipPlaced === "Invalid") {
+            shipPlaced = playerTwo.board.placeShip(j, `ship + ${j}`, randomCoords(playerTwo.board.boardArr), randomizeShipOrientation())
+        }
+    }
 
     // build GUI what the player sees
-    buildBoard(playerOne, playerTwo, playRound)
+    buildBoard(playerOne, playerTwo, playRound, resetGame)
 
     function playRound(enemy, coords) {
         let attackResult;
@@ -45,8 +48,8 @@ const gameController = () => {
                     gameOver = true;
                 }
             }
-            destroyContent(document.querySelector(".gameBoards"))
-            buildBoard(playerOne, playerTwo, playRound)
+            destroyContent(document.querySelector(".wrapper"))
+            buildBoard(playerOne, playerTwo, playRound, resetGame)
         }
     };
 
@@ -59,7 +62,15 @@ const gameController = () => {
         return result
     }
 
+    function randomizeShipOrientation() {
+        return Math.random() < 0.5;
+    }
+
     return { playerOne, playerTwo }
 }
 
+function resetGame() {
+    destroyContent(document.querySelector(".wrapper"))
+    gameController()
+}
 const game = gameController();

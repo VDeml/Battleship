@@ -1,6 +1,7 @@
 class Ship {
-    constructor(length) {
+    constructor(length, className) {
         this.length = length
+        this.className = className
         this.dmgTaken = 0
         this.sunk = false
     };
@@ -40,44 +41,46 @@ const gameBoard = () => {
     // an array to keep track of all of the player's ships and their "sunk" status
     let playerFleet = []
 
-    // function to place a ship on the board, provided with the [x,y] coordinates
-    const placeShip = (sizeOfShip, coords, verticalRotation = false) => {
-        const xCoordinate = coords[0];
-        const yCoordinate = coords[1];
+    // function to place a ship on the board, provided with the [y,x] coordinates
+    const placeShip = (sizeOfShip, name, coords, verticalRotation = false) => {
+        const row = coords[0];
+        const column = coords[1];
         const shipLength = sizeOfShip
-        const newShip = new Ship(shipLength)
-        if (xCoordinate < 0 || xCoordinate >= SIZE || yCoordinate < 0 || yCoordinate >= SIZE) {
-            return "Trying to place ship outside battlefield"
+        const className = name
+        const newShip = new Ship(shipLength, className)
+        if (row < 0 || row >= SIZE || column < 0 || column >= SIZE) {
+            return "Invalid"
         }
         if (verticalRotation) {
-            if (xCoordinate + shipLength > SIZE) {
-                return "Trying to place ship outside battlefield"
+            if (row + shipLength > SIZE) {
+                return "Invalid"
             }
         } 
         else {
-            if (yCoordinate + shipLength > SIZE) {
-                return "Trying to place ship outside battlefield"
+            if (column + shipLength > SIZE) {
+                return "Invalid"
             }
         }
         // First for loop checking if boardArr is free for ship placement
         for(let i = 0; i < shipLength; i++) {
-            if(verticalRotation && boardArr[xCoordinate + i][yCoordinate] !== null) {
-                return "Coordinates occupied, pick a new spot for your ship"
+            if(verticalRotation && boardArr[row + i][column] !== null) {
+                return "Invalid"
             }
-            if(!verticalRotation && boardArr[xCoordinate][yCoordinate + i] !== null) {
-                return "Coordinates occupied, pick a new spot for your ship"
+            if(!verticalRotation && boardArr[row][column + i] !== null) {
+                return "Invalid"
             }
         }       
         // Given the first for loop finished, the boardArr is free and we can place our ship
         for(let j = 0; j < shipLength; j++) {
             if(verticalRotation) {
-                boardArr[xCoordinate + j][yCoordinate] = newShip
+                boardArr[row + j][column] = newShip
             }
             else if(!verticalRotation) {
-                boardArr[xCoordinate][yCoordinate + j] = newShip
+                boardArr[row][column + j] = newShip
             }
         }
         playerFleet.push(newShip)
+        return "valid placement"
     };
 
     const recieveAttack = (coordinates) => {
@@ -124,6 +127,9 @@ class Player {
         this.isPerson = isPerson
         this.board = gameBoard()
     };
+    resetBoard() {
+        this.board = gameBoard()
+    }
 } 
 
 export { Ship, gameBoard, Player }

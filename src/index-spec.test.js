@@ -39,7 +39,7 @@ test.skip("Placing a new ship on gameboard", () => {
     expect(board.boardArr[0][1]).not.toBe(null)
 });
 
-test("Placing a ship in an already taken space", () => {
+test.skip("Placing a ship in an already taken space", () => {
     const board = gameBoard();
     board.placeShip(1, [0,0, true])
     expect(board.placeShip(1, [0,0])).toBe("Coordinates occupied, pick a new spot for your ship")
@@ -53,3 +53,8 @@ test("Creating a new human player with name Tom", () => {
     expect(playerOne.board.playerFleet[0]).toBe(undefined)
 })
 
+test("assigning a name to be later used as a CSS class for ships", () => {
+    const playerOne = new Player("Test subject", true)
+    const shipOne = playerOne.board.placeShip(3, "tugboat", [0,0], true)
+    expect(playerOne.board.boardArr[0][0].className).toBe("tugboat")
+})

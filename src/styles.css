@@ -59,48 +59,48 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: var(--primary-bg-color);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-color: var(--primary-bg-color);
 }
 
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    padding-top: 2rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 2rem;
 }
 
 .wrapper h1 {
   font-size: 3.2rem;
+  align-self: center;
 }
 
-
+.wrap h2 {
+  font-size: 2rem;
+}
+ 
+.wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .gameBoards {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1.5rem;
 }
 
-.humanBoard, .computerBoard, .humanFogBoard, .computerFogBoard {
-    background-color: rgb(242, 242, 242);
-    box-shadow: 20px 12px 20px 0 rgba(0, 0, 0, 0.2), 5px 10px 20px 0 rgba(0, 0, 0, 0.19);
-    border: solid black 2px;
-    min-width: 200px;
-    min-height: 200px;
-    max-width: 400px;
-    max-height: 400px;
-    display: grid;
-    grid-template: repeat(8, 1fr) / repeat(8, 1fr);
-    box-sizing: border-box;
-}
-
-.missed, .gotShot {
-  background-color: red;
-}
-
-.hit {
-  background-color: green;
+.humanBoard, .humanFogBoard {
+  background-color: rgb(242, 242, 242);
+  box-shadow: 20px 12px 20px 0 rgba(0, 0, 0, 0.2), 5px 10px 20px 0 rgba(0, 0, 0, 0.19);
+  border: solid black 2px;
+  display: grid;
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+  box-sizing: border-box;
+  width: min(100%, 600px);
+  aspect-ratio: 1 / 1;
 }
 
 .gridCell {
@@ -113,48 +113,37 @@ body {
   cursor: pointer
 }
 
+.shuffle {
+  min-width: 120px;
+  max-width: 50%;
+  align-self: center;
+}
+
 .gridCell:hover {
-    background-color: var(--primary-bg-color);
+  background-color: var(--primary-bg-color);
 }
 
-.containsShip {
-    background-color: rgb(68, 67, 67);
+.ship1 {
+  background-color: rgb(208, 208, 91);
+}
+.ship2 {
+  background-color: rgb(96, 192, 239);
+}
+.ship3 {
+  background-color: rgb(235, 161, 51)
+}
+.ship4 {
+  background-color: rgb(136, 210, 87);
+}
+.ship5 {
+  background-color: rgb(142, 90, 155);
 }
 
-/*
-.modal {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(150, 210, 210, 0.3);
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    inset: 0;
-    backdrop-filter: blur(6px);
+.missed, .gotShot {
+  background-image: url(../assets/dot.svg);
+  background-size: cover;
 }
-
-.modal h2 {
-  font-size: 2.6rem;
+.hit {
+  background-image: url(../assets/x.svg);
+  background-size: cover;
 }
-
-.namesForm {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    padding-top: 1em;
-    gap: 12px;
-    background-color: rgb(230, 230, 230);
-    border: black solid 4px;
-    border-radius: 25px;
-    padding: 1.5rem;
-    font-size: 2rem;
-}
-
-.hidden {
-    visibility: hidden;
-} 
-
-.message {
-  font-size: 2rem;
-}
-*/
